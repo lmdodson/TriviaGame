@@ -28,6 +28,7 @@ body {
 	font-size: 30px;
 	font-family: "Josefin Sans", sans-serif;
 	text-align: left;
+	display: inline-block;
 }
 
 h2 {
@@ -42,6 +43,14 @@ h2 {
 	width: 60px;
 	background: url(../images/symbol.png);
 	background-size: contain;
-	display: inline-block;
-	margin: 25px;
+	margin: 0 auto;
+	margin-top: 35px;
+}
+
+.answer {
+	font-size: 25px;
+	font-family: "Josefin Sans", sans-serif;
+	text-align: left;
+	/* margin-left: 5px; */
+	margin: 35px;
 }
