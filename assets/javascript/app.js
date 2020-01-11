@@ -12,6 +12,8 @@ $(document).ready(function () {
     var timer = 20;
     var intervalId;
     var unanswered = 0;
+    var rightAnswers = 0;
+    var wrongAnswers = 0;
     var userOption = "";
 
     var questions = [{
@@ -20,9 +22,10 @@ $(document).ready(function () {
                 "A: Directly at the enemy",
                 "B: Behind the enemy in case they step back",
                 "C: At the enemy's feet so they know you mean business",
-                "D: Both B and C are correct answers"
+                "D: Both B and C"
             ],
-            answerPosition: 3
+            answerPosition: 3,
+            answerLetter: "D"
         },
         {
             question: "What does our armor protect against?",
@@ -32,7 +35,8 @@ $(document).ready(function () {
                 "C: Nothing, its just so we look scary",
                 "D: The force"
             ],
-            answerPosition: 3
+            answerPosition: 2,
+            answerLetter: "C"
         }
     ];
 
@@ -52,7 +56,7 @@ $(document).ready(function () {
         running = false;
         //resets the interval
         clearInterval(intervalId);
-    }
+    };
 
     function decrement() {
         timer--;
@@ -61,6 +65,7 @@ $(document).ready(function () {
             unanswered++;
             console.log(unanswered);
             stopTimer();
+            $("#correct-answer").html("<h3>Out of time. Correct answer: " + choice.options[choice.answerPosition] + "</h3>");
         }
     }
 
@@ -91,6 +96,18 @@ $(document).ready(function () {
             // alert("user clicked");
             selection = parseInt($(this).attr("data-position"));
             // alert(selection);
+
+            if (selection == choice.answerPosition) {
+                stopTimer();
+                rightAnswers++;
+                selection = "";
+                $("#correct-answer").html("<h3>You are correct</h3>");
+            } else {
+                stopTimer();
+                wrongAnswers++;
+                selection = "";
+                $("#correct-answer").html("<h3>WRONG. " + choice.answerLetter + " is correct </h3>");
+            };
 
 
         });
