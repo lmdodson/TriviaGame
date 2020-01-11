@@ -12,28 +12,45 @@ $(document).ready(function () {
     var timer = 20;
     var intervalId;
     var unanswered = 0;
+    var userOption = "";
 
-
-    var questions = {
-        question: "When firing at the enemy, where should you aim?",
-        options: [
-            "A: Directly at the enemy",
-            "B: Behind the enemy in case they step back",
-            "C: At the enemy's feet so they know you mean business",
-            "D: Both B and C are correct answers"
-        ],
-    };
+    var questions = [{
+            question: "When firing at the enemy, where should you aim?",
+            options: [
+                "A: Directly at the enemy",
+                "B: Behind the enemy in case they step back",
+                "C: At the enemy's feet so they know you mean business",
+                "D: Both B and C are correct answers"
+            ],
+            answerPosition: 3
+        },
+        {
+            question: "What does our armor protect against?",
+            options: [
+                "A: Old-school bullets",
+                "B: Phaser Blasts",
+                "C: Nothing, its just so we look scary",
+                "D: The force"
+            ],
+            answerPosition: 3
+        }
+    ];
 
     //!Timing functions
+    //starts the timer
     function runTimer() {
         if (!timerRunning) {
+            //tells the timer to count down by 1 sec
             intervalId = setInterval(decrement, 1000);
+            //sets the timer to run
             timerRunning = true;
         }
-    };
-
+    }
+    //stops the timer
     function stopTimer() {
+        //sets timer to not run
         running = false;
+        //resets the interval
         clearInterval(intervalId);
     }
 
@@ -43,32 +60,46 @@ $(document).ready(function () {
         if (timer === 0) {
             unanswered++;
             console.log(unanswered);
-            stopTimer()
+            stopTimer();
         }
-    };
+    }
 
     //!Game functions
     function questionDisplay() {
-        $("#question").text(questions.question);
-        console.log(questions.question);
+        index = Math.floor(Math.random() * questions.length);
+        choice = questions[index];
+        //show the question in html
+        $("#question").text(choice.question);
+        console.log(choice.question);
         //loop to display the answer options
-        for (var i = 0; i < questions.options.length; i++) {
+        for (var i = 0; i < choice.options.length; i++) {
+            //create a new div for each option
             var userOption = $("<div>");
+            //give each option the class of answer
             userOption.addClass("answer");
-            userOption.html(questions.options[i]);
-            userOption.attr("position", i)
-            $("#answer-options").append(userOption)
+            //put the value into the new div
+            userOption.html(choice.options[i]);
+            //assign the index position as an attribute
+            userOption.attr("data-position", i);
+            //put it all inside the html div
+            $("#answer-options").append(userOption);
         }
-
         runTimer();
 
-        // $(".answer-a").text("A: " + questions.options[0].choice);
-        // $(".answer-b").text("B: " + questions.options[1].choice);
-        // $(".answer-c").text("C: " + questions.options[2].choice);
-        // $(".answer-d").text("D: " + questions.options[3].choice);
+        //grab info from the users choice
+        $(".answer").click(function () {
+            // alert("user clicked");
+            selection = parseInt($(this).attr("data-position"));
+            // alert(selection);
 
+
+        });
     }
+    //checks the users selection
+    // $(".answer").click(function() {
+    // 	alert("user clicked");
 
-
-
+    // selection = parseInt($(this).attr("data-position"));
+    // alert(selection);
+    // });
 });

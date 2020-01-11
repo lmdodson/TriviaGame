@@ -13,6 +13,7 @@ body {
 }
 
 .trivia-board {
+	position: relative;
 	background-color: lightgray;
 	opacity: 0.8;
 	color: black;
@@ -52,6 +53,14 @@ h2 {
 	font-family: "Josefin Sans", sans-serif;
 	text-align: left;
 	margin: 35px;
-	border: black thick;
-	padding: 15px;
+	/* float: left; */
+	/* border: black thick;
+	padding: 15px; */
+}
+
+#timer {
+	position: absolute;
+	bottom: 0;
+	font-size: 20px;
+	font-weight: bolder;
 }
