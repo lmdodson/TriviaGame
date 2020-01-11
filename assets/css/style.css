@@ -51,6 +51,7 @@ h2 {
 	font-size: 25px;
 	font-family: "Josefin Sans", sans-serif;
 	text-align: left;
-	/* margin-left: 5px; */
 	margin: 35px;
+	border: black thick;
+	padding: 15px;
 }
