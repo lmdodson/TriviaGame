@@ -89,34 +89,31 @@ $(document).ready(function () {
             //put it all inside the html div
             $("#answer-options").append(userOption);
         }
-        runTimer();
-
-        //grab info from the users choice
-        $(".answer").click(function () {
-            // alert("user clicked");
-            selection = parseInt($(this).attr("data-position"));
-            // alert(selection);
-
-            if (selection == choice.answerPosition) {
-                stopTimer();
-                rightAnswers++;
-                selection = "";
-                $("#correct-answer").html("<h3>You are correct</h3>");
-            } else {
-                stopTimer();
-                wrongAnswers++;
-                selection = "";
-                $("#correct-answer").html("<h3>WRONG. " + choice.answerLetter + " is correct </h3>");
-            };
-
-
-        });
     }
-    //checks the users selection
-    // $(".answer").click(function() {
-    // 	alert("user clicked");
 
-    // selection = parseInt($(this).attr("data-position"));
-    // alert(selection);
-    // });
+    runTimer();
+    $(".answer").click(function () {
+        // alert("user clicked");
+        selection = parseInt($(this).attr("data-position"));
+        // alert(selection);
+
+        if (selection == choice.answerPosition) {
+            stopTimer();
+            rightAnswers++;
+            selection = "";
+            $("#correct-answer").html("<h3>You are correct</h3>");
+            questionDisplay();
+
+
+        } else {
+            stopTimer();
+            wrongAnswers++;
+            selection = "";
+            $("#correct-answer").html("<h3>WRONG. " + choice.answerLetter + " is correct </h3>");
+            questionDisplay();
+        };
+
+
+    });
+
 });
