@@ -52,6 +52,7 @@ h3 {
 	background-size: contain;
 	margin: 0 auto;
 	margin-top: 35px;
+	cursor: pointer;
 }
 
 .answer {
@@ -59,6 +60,7 @@ h3 {
 	font-family: "Josefin Sans", sans-serif;
 	text-align: left;
 	margin: 35px;
+	cursor: pointer;
 	/* float: left; */
 	/* border: black thick;
 	padding: 15px; */

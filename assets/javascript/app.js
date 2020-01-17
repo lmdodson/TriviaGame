@@ -15,6 +15,7 @@ $(document).ready(function () {
     var rightAnswers = 0;
     var wrongAnswers = 0;
     var userOption = "";
+    var a = 0;
 
     var questions = [{
             question: "When firing at the enemy, where should you aim?",
@@ -37,6 +38,17 @@ $(document).ready(function () {
             ],
             answerPosition: 2,
             answerLetter: "C"
+        },
+        {
+            question: "What's in the bag?",
+            options: [
+                "A: Baby Yoda",
+                "B: It doesn't matter, it's our job to deliver it",
+                "C: It doesn't matter, punch it",
+                "D: Snacks"
+            ],
+            answerPosition: 2,
+            answerLetter: "C"
         }
     ];
 
@@ -56,7 +68,7 @@ $(document).ready(function () {
         running = false;
         //resets the interval
         clearInterval(intervalId);
-    };
+    }
 
     function decrement() {
         timer--;
@@ -65,34 +77,50 @@ $(document).ready(function () {
             unanswered++;
             console.log(unanswered);
             stopTimer();
-            $("#correct-answer").html("<h3>Out of time. Correct answer: " + choice.options[choice.answerPosition] + "</h3>");
+            $("#correct-answer").html(
+                "<h3>Out of time. Correct answer: " +
+                choice.options[choice.answerPosition] +
+                "</h3>"
+            );
+            wait();
         }
     }
 
     //!Game functions
     function questionDisplay() {
-        index = Math.floor(Math.random() * questions.length);
-        choice = questions[index];
-        //show the question in html
-        $("#question").text(choice.question);
-        console.log(choice.question);
-        //loop to display the answer options
-        for (var i = 0; i < choice.options.length; i++) {
-            //create a new div for each option
-            var userOption = $("<div>");
-            //give each option the class of answer
-            userOption.addClass("answer");
-            //put the value into the new div
-            userOption.html(choice.options[i]);
-            //assign the index position as an attribute
-            userOption.attr("data-position", i);
-            //put it all inside the html div
-            $("#answer-options").append(userOption);
+        if (a < questions.length) {
+            choice = questions[a];
+            //show the question in html
+            $("#question").text(choice.question);
+            console.log(choice.question);
+            //loop to display the answer options
+            for (var i = 0; i < choice.options.length; i++) {
+                //create a new div for each option
+                var userOption = $("<div>");
+                //give each option the class of answer
+                userOption.addClass("answer");
+                //put the value into the new div
+                userOption.html(choice.options[i]);
+                //assign the index position as an attribute
+                userOption.attr("data-position", i);
+                //put it all inside the html div
+                $("#answer-options").append(userOption);
+            }
+            runTimer();
+        } else {
+            $("#question").text("Game Over!");
+            scoreCorrect = $("<p>");
+            scoreCorrect.text(rightAnswers);
+            scoreWrong = $("<p>");
+            scoreWrong.text(wrongAnswers);
+            $("#score").append(rightAnswers);
+            $("#score").append(wrongAnswers);
+
+
+
         }
     }
-
-    runTimer();
-    $(".answer").click(function () {
+    $(document).on("click", ".answer", function () {
         // alert("user clicked");
         selection = parseInt($(this).attr("data-position"));
         // alert(selection);
@@ -102,18 +130,27 @@ $(document).ready(function () {
             rightAnswers++;
             selection = "";
             $("#correct-answer").html("<h3>You are correct</h3>");
-            questionDisplay();
-
-
+            wait();
         } else {
             stopTimer();
             wrongAnswers++;
             selection = "";
-            $("#correct-answer").html("<h3>WRONG. " + choice.answerLetter + " is correct </h3>");
-            questionDisplay();
-        };
-
-
+            $("#correct-answer").html(
+                "<h3>WRONG. " + choice.answerLetter + " is correct </h3>"
+            );
+            wait();
+        }
     });
 
+    // function clearResults() {
+
+    // }
+
+    function wait() {
+        a++;
+        // setTimeout(clearResults, 1000);
+        $("#answer-options").empty();
+
+        setTimeout(questionDisplay(a), 3000);
+    }
 });
